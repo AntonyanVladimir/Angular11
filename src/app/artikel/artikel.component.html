@@ -1,0 +1,30 @@
+<ng-container *ngIf="artikel">
+
+	<article>
+		<div cladd="compact">
+			<h3><a [routerLink]="['/articles', artikel.id]" href="#">{{artikel.ueberschrift}}</a></h3>
+			<p>{{artikel.autor}}</p>
+			<p>{{artikel.datum}}</p>
+			<p>{{artikel.anriss}}</p>
+			<button *ngIf="!isNotCompact()" class="btn btn-success btn-sm mb-2"
+			[routerLink]="['/articles', artikel.id]">Details anzeigen</button>
+		</div>
+		<div *ngIf="isNotCompact()">
+			<p>{{artikel.text}}</p>
+			<img [src]="artikel.bild">
+			<div>
+				<span class="badge badge-pill badge-primary" *ngFor="let tag of artikel.tags" routerLink="/articles"
+					[queryParams]="{suchtag:tag}"> {{tag}} </span>
+			</div>
+			<div>
+				<a title="Facebook" href="https://www.facebook.com/share.php?u=artikel.html?id=${article.id}"
+					target="_blank">Teilen auf Facebook</a> |
+				<a title="Twitter" href="https://twitter.com/intent/tweet?url=artikel.html?id=${article.id}"
+					target="_blank">Twittern</a> |
+				<a href="teilenEmail.html?id=${article.id}">Teilen via E-Mail</a> <br>
+			</div>
+		</div>
+		<button class="btn btn-success btn-sm mb-1" [routerLink]="['/articles', artikel.id]"
+			[queryParams]="{display:'kompakt'}" *ngIf="isNotCompact()">Kompakt Anzeigen</button>
+	</article>
+</ng-container>

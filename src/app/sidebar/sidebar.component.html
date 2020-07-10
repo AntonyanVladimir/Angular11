@@ -1,0 +1,26 @@
+<aside id="sidebar" class="col-12 col-md-3 mt-5">
+    <div class="row">
+        <label for="login" class="col-6">Login</label> <input class="col-6" id="login" name="login" type="text"
+            size="12"><br>
+        <label for="password" class="col-6">Passwort</label> <input class="col-6" id="password" name="password"
+            type="text" size="12"><br>
+        <div class="col-12"><a class="btn btn-outline-primary btn-sm" href="#">Login</a></div>
+        <hr class="col-12">
+        <div class="col-12 input-group input-group-sm pr-0">
+            <input id="searchquery" name="searchquery" type="text" class="form-control"  aria-label="Suchen" [(ngModel)]="suchwort">
+            <div class="input-group-append">
+                <a id="searchBtn" class="btn btn-outline-primary" routerLink='/artikels' [queryParams]={suchwort:suchwort} >Suchen</a>
+            </div>
+        </div>
+       
+        <hr class="col-12">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="monatsliste.html">November 2017 (3)</a></li>
+            <li class="list-group-item"><a href="monatsliste.html">Dezember 2017 (1)</a></li>
+            <li class="list-group-item"><a href="monatsliste.html">März 2018 (2)</a></li>
+            <li class="list-group-item"><a href="monatsliste.html">April 2018 (1)</a></li>
+        </ul>
+        <hr class="col-12">
+        <div class="col-12"><a *ngFor="let tag of tagListe" href="#" >{{tag}} </a></div>    
+    </div>
+</aside>
