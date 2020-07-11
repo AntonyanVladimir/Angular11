@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BlogartikelServiceService } from '../../blogartikel-service.service';
 import { Artikel } from '../Artikel';
 import { Location } from '@angular/common';
+import { RestService } from '../rest.service';
 
 @Component({
   selector: 'app-artikel-editor',
@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 })
 export class ArtikelEditorComponent implements OnInit {
  
-  constructor(private route:ActivatedRoute, private service:BlogartikelServiceService, private location:Location) { }
+  constructor(private route:ActivatedRoute, private service:RestService, private location:Location) { }
   artikel:Artikel;
  cancel():void{
 	this.location.back();
@@ -22,15 +22,15 @@ onChange(event):void{
 	
 }
 save(){
-	let changedTags = [];
-	let tagValues = document.getElementById('tags');
+	this.service.editArticle(this.artikel);
 	
 }
   ngOnInit(): void {
 	let id = this.route.snapshot.paramMap.get('id');
 	if(id){
-	let artikels = this.service.artikels;		
-	this.artikel = this.service.getArtikelById(id, artikels);
+		this.service.getArtikel(id).subscribe(artikel=>{
+			this.artikel = artikel;
+		})
 	}
 	
   }

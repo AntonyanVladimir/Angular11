@@ -13,6 +13,8 @@ import { ImpressumComponent } from './impressum/impressum.component';
 import { KontaktComponent } from './kontakt/kontakt.component';
 import { ArtikelShareComponent } from './artikel-share/artikel-share.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CreateComponent } from './create/create.component';
 
 @NgModule({
 	declarations: [
@@ -26,10 +28,12 @@ import { NotFoundComponent } from './not-found/not-found.component';
 		ImpressumComponent,
 		KontaktComponent,
 		ArtikelShareComponent,
-		NotFoundComponent
+		NotFoundComponent,
+		CreateComponent
 	],
 	imports: [
 		BrowserModule,
+		HttpClientModule,
 		AppRoutingModule,
 		FormsModule
 	],

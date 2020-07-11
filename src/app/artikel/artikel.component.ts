@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {Artikel} from '../../app/Artikel';
-import {mockArtikels} from '../mockArtikels';
 import { ActivatedRoute } from '@angular/router';
-import { BlogartikelServiceService } from '../../blogartikel-service.service'
+import { RestService } from '../rest.service';
 
 
 @Component({
@@ -11,17 +10,20 @@ import { BlogartikelServiceService } from '../../blogartikel-service.service'
   styleUrls: ['./artikel.component.css']
 })
 export class ArtikelComponent implements OnInit {
- artikels:Artikel[] = this.service.artikels; 
- constructor(private route:ActivatedRoute, private service:BlogartikelServiceService) { }
+ constructor(private route:ActivatedRoute, private service:RestService) { }
  @Input('artikel') artikel: Artikel;
+ @Output() deleteArt:EventEmitter<Artikel> = new EventEmitter();
 
   ngOnInit(): void {
 	
 	let id = this.route.snapshot.paramMap.get('id');
 	if(id){
-		this.artikel = this.service.getArtikelById(id, this.artikels);
+		this.service.getArtikel(id).subscribe(artikel=>{
+			this.artikel = artikel;
+		});
 	}
   }
+
 	isNotCompact(){
 		const display: string = this.route.snapshot.queryParamMap.get('display');
 		if(display !== 'kompakt')
@@ -29,5 +31,10 @@ export class ArtikelComponent implements OnInit {
 		else return false;
 		
 	}
-	
+	onDelete(artikel){
+		this.deleteArt.emit(artikel);
+		console.log('Emittet.');
+	}
 }
+
+

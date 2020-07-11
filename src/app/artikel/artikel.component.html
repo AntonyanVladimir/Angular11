@@ -1,5 +1,8 @@
 <ng-container *ngIf="artikel">
-
+	<div>
+	<button class="btn btn-warning btn-sm" [routerLink]="['/editArticle', artikel.id]">Edit Artikel</button>
+	<button class="btn btn-danger btn-sm ml-1" (click)="onDelete(artikel)">Delete</button>
+	</div>
 	<article>
 		<div cladd="compact">
 			<h3><a [routerLink]="['/articles', artikel.id]" href="#">{{artikel.ueberschrift}}</a></h3>

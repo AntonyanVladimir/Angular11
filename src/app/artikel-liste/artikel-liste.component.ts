@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Artikel} from '../Artikel';
-import {mockArtikels} from '../mockArtikels';
 import { ActivatedRoute } from '@angular/router';
-import { BlogartikelServiceService } from '../../blogartikel-service.service'
+import { RestService } from '../rest.service';
 
 @Component({
   selector: 'app-artikel-liste',
@@ -11,19 +10,37 @@ import { BlogartikelServiceService } from '../../blogartikel-service.service'
 })
 export class ArtikelListeComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private service:BlogartikelServiceService) { }
-	artikelListe:Artikel[] = mockArtikels;
+  constructor(private route:ActivatedRoute, private restService:RestService) { }
+	artikelListe:any[];
 	
   ngOnInit(): void {
-	const suchtag: string = this.route.snapshot.queryParamMap.get('suchtag');
-		if(suchtag){
-		this.artikelListe = this.service.getArtikelBySuchtag(suchtag);
-	const suchwort: string = this.route.snapshot.queryParamMap.get('suchwort');
-		if(suchwort){
-			console.log(suchwort);
-		this.artikelListe = this.service.getArtikelBySuchwort(suchwort);
-  }
+	let suchtag = this.route.snapshot.queryParamMap.get('tag');
+	let suchwort = this.route.snapshot.queryParamMap.get('suchwort');
+	if(suchtag&&suchwort){
+		this.restService.getArtikelsBySuchtagUndSuchwort(suchtag, suchwort).subscribe(artikels=>{
+			this.artikelListe = artikels;
+		})
+	} else
+	if(suchtag)
+	this.restService.getArticlesByTag(suchtag).subscribe(artikels=>{
+		this.artikelListe = artikels;
+	}, error=>console.log('Keine Artikels mit dem Tag'+suchtag));
+	else if(suchwort){
+		this.restService.getArticleBySuchwort(suchwort).subscribe(artikels=>{
+			this.artikelListe = artikels;
+		}, error=>alert('Keine Artikels mit dem suchwort'+suchwort));
 	}
+	else {
+		this.restService.getArticles().subscribe(articles=>{
+			this.artikelListe = articles;
+		}, error=>console.log('Articles wurden nicht gefunden.'));
+	}
+	
   }
+deleteArtikel(artikel:Artikel){
+	this.artikelListe = this.artikelListe.filter(m=>m.id!== artikel.id);
+	this.restService.deleteArticle(artikel.id).subscribe();
+}
+
 
 }

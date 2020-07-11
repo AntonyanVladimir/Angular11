@@ -4,6 +4,7 @@ import { ArtikelListeComponent } from './artikel-liste/artikel-liste.component';
 import { ArtikelComponent } from './artikel/artikel.component';
 import { ArtikelEditorComponent } from './artikel-editor/artikel-editor.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { CreateComponent } from './create/create.component';
 
 
 
@@ -14,6 +15,7 @@ const routes: Routes = [
 	{ path: 'articles', component: ArtikelListeComponent },
 	{ path: 'articles/:id', component: ArtikelComponent },
 	{ path: 'editArticle/:id', component: ArtikelEditorComponent },
+	{ path: 'newArticle', component: CreateComponent},
 	{ path: '**', component:NotFoundComponent}
 ];
 

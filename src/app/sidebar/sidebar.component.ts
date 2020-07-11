@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Artikel} from '../../app/Artikel';
-import {mockArtikels}from '../../app/mockArtikels';
 import { ActivatedRoute } from '@angular/router';
-import { BlogartikelServiceService } from '../../blogartikel-service.service'
+import { RestService } from '../rest.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -10,14 +9,13 @@ import { BlogartikelServiceService } from '../../blogartikel-service.service'
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private service:BlogartikelServiceService) { }
+  constructor(private route:ActivatedRoute, private service:RestService) { }
 suchwort:string;
-artikels:Artikel[] = mockArtikels;
-tagListe:string[] = this.getTagListe(this.artikels);
+//tagListe:string[] = this.getTagListe(this.artikels);
   ngOnInit(): void {
 	
 }
-getTagListe(artikels){
+/*getTagListe(artikels){
 	let tagListe = [];
 	for(let artikel of this.artikels){
 		for(let tag of artikel.tags){
@@ -26,5 +24,5 @@ getTagListe(artikels){
 		}
 	}
 	return tagListe;
-}
+}*/
 }

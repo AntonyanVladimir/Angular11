@@ -1,5 +1,6 @@
 
-<div *ngFor="let artikel of artikelListe" >
-<button class="btn btn-warning btn-sm" [routerLink]="['/editArticle', artikel.id]">Edit Artikel</button>
-			<app-artikel [artikel]="artikel" ></app-artikel>
+	<button class="btn btn-primary btn-sm mb-2" routerLink='/newArticle'>Create
+		New Article</button>
+<div *ngFor="let artikel of artikelListe">
+	<app-artikel [artikel]="artikel" (deleteArt)="deleteArtikel($event)"></app-artikel>
 </div>
